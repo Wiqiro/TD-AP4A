@@ -1,50 +1,53 @@
+#pragma once
+
+#include <chrono>
 #include <fstream>
+#include <iomanip>
 #include <iostream>
-#include <list>
-#include <map>
 #include <string>
+
+#include "sensors/sensor.h"
 
 class Server {
    private:
-    std::string name;
-    double temperature, humidity, sound, light;
+    bool consolActivation;
+    bool logActivation;
+
+    template <typename T>
+    void fileWrite(std::ofstream &file, T data) {
+        auto now = std::chrono::system_clock::now();
+        auto in_time_t = std::chrono::system_clock::to_time_t(now);
+
+        file << std::put_time(std::localtime(&in_time_t), "%X  ") << data
+             << std::endl;
+    }
+
+    template <typename T>
+    void consoleWrite(T data) {
+        auto now = std::chrono::system_clock::now();
+        auto in_time_t = std::chrono::system_clock::to_time_t(now);
+
+        std::cout << std::put_time(std::localtime(&in_time_t), "%X  ") << data
+                  << std::endl;
+    }
 
    public:
-    /**
-     * @brief Default constructor for Server
-     */
     Server();
-
-    /**
-     * @brief Copy constructor for Server
-     * @param server: Server to copy
-     */
     Server(const Server &server);
-
-    /**
-     * @brief Construct a new Server object
-     *
-     * @param name: Server's name
-     * @param data: Server's data
-     */
-    Server(const std::string &name, double temperature, double humidity,
-           double sound, double light);
+    Server(bool consolActivation, bool logActivation);
 
     ~Server();
 
     Server &operator=(const Server &server);
+    friend std::ostream &operator<<(std::ostream &os, Sensor &data);
+    friend std::ostream &operator<<(std::ostream &os,
+                                    std::string dataSensToString);
 
-    /**
-     * @brief Write the server data inside a file
-     *
-     * @param file: The file in which the server data should be written
-     */
-    void fileWrite(std::ofstream &file);
-
-    /**
-     * @brief Outputs the server data in the console
-     */
-    void consoleWrite();
-
-    friend std::ostream &operator<<(std::ostream &os, const Server &server);
+    template <typename T>
+    void dataRcv(std::string sensorName, T data) {
+        std::ofstream sensorFile(sensorName, std::ios::app);
+        fileWrite(sensorFile, data);
+        consoleWrite(data);
+        sensorFile.close();
+    }
 };

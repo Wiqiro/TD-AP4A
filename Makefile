@@ -1,19 +1,17 @@
-CC = g++
-CFLAGS = -Wall -Werror -pedantic -std=c++17
+CC=g++
+CFLAGS=-c -Wall
+LDFLAGS=
+SOURCES=main.cpp server.cpp scheduler.cpp sensors/sensor.cpp
+OBJECTS=$(SOURCES:.cpp=.o)
+EXECUTABLE=myserver
 
-SRCS = main.cpp server.cpp
-OBJS = $(SRCS:.cpp=.o)
+all: $(SOURCES) $(EXECUTABLE)
 
-all: server
+$(EXECUTABLE): $(OBJECTS)
+	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
 
-server: $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o server
-
-%.o: %.cpp
-	$(CC) $(CFLAGS) -c $< -o $@
-
-run: server
-	./server
+.cpp.o:
+	$(CC) $(CFLAGS) $< -o $@
 
 clean:
-	rm -f $(OBJS) server
+	rm -rf $(OBJECTS) $(EXECUTABLE)
