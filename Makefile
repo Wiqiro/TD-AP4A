@@ -1,9 +1,9 @@
 CC=g++
-CFLAGS=-c -Wall
+CFLAGS=-c -Wall -pedantic -std=c++17
 LDFLAGS=
-SOURCES=main.cpp server.cpp scheduler.cpp sensors/sensor.cpp
+SOURCES=main.cpp server.cpp scheduler.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
-EXECUTABLE=myserver
+EXECUTABLE=iot_simulator
 
 all: $(SOURCES) $(EXECUTABLE)
 
@@ -12,6 +12,9 @@ $(EXECUTABLE): $(OBJECTS)
 
 .cpp.o:
 	$(CC) $(CFLAGS) $< -o $@
+
+run: $(EXECUTABLE)
+	./$(EXECUTABLE)
 
 clean:
 	rm -rf $(OBJECTS) $(EXECUTABLE)

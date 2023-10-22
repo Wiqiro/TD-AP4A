@@ -6,7 +6,7 @@
 #include <iostream>
 #include <string>
 
-#include "sensors/sensor.h"
+#include "sensors/sensor.hpp"
 
 class Server {
    private:
@@ -39,9 +39,7 @@ class Server {
     ~Server();
 
     Server &operator=(const Server &server);
-    friend std::ostream &operator<<(std::ostream &os, Sensor &data);
-    friend std::ostream &operator<<(std::ostream &os,
-                                    std::string dataSensToString);
+    friend std::ostream &operator<<(std::ostream &os, int &data);
 
     template <typename T>
     void dataRcv(std::string sensorName, T data) {
