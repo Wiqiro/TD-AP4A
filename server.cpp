@@ -1,8 +1,8 @@
 #include "server.hpp"
 
 Server::Server() {
-    consolActivation = 0;
-    logActivation = 0;
+    consolActivation = true;
+    logActivation = true;
 }
 
 Server::Server(const Server &server)
@@ -20,7 +20,7 @@ Server &Server::operator=(const Server &server) {
     return *this;
 }
 
-std::ostream &operator<<(std::ostream &os, int dataSens) {}
+/* std::ostream &operator<<(std::ostream &os, int dataSens) {} */
 
 
 
@@ -29,9 +29,9 @@ template void Server::fileWrite<int>(std::ofstream &file, int data);
 template void Server::fileWrite<float>(std::ofstream &file, float data);
 template void Server::fileWrite<bool>(std::ofstream &file, bool data);
 
-template void Server::consoleWrite<int>(int data);
-template void Server::consoleWrite<float>(float data);
-template void Server::consoleWrite<bool>(bool data);
+template void Server::consoleWrite<int>(std::string sensorName, int data);
+template void Server::consoleWrite<float>(std::string sensorName, float data);
+template void Server::consoleWrite<bool>(std::string sensorName, bool data);
 
 template void Server::dataRcv<int>(std::string sensorName, int data);
 template void Server::dataRcv<float>(std::string sensorName, float data);

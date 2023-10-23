@@ -1,5 +1,9 @@
+#pragma once
+
 #include "./sensor.hpp"
 
 class TemperatureSensor : public Sensor<float> {
-    float aleaGenVal() { return 5.2; }
+    void aleaGenVal() {
+        value = ((float) rand() / RAND_MAX) * 100 - 50;
+    }
 };

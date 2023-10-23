@@ -1,5 +1,9 @@
+#pragma once
+
 #include "./sensor.hpp"
 
 class LightSensor : public Sensor<bool> {
-    bool aleaGenVal() { return false; }
+    void aleaGenVal() {
+        value = (rand() % 2 == 0);
+    }
 };
