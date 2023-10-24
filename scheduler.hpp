@@ -12,25 +12,25 @@
 
 class Scheduler {
    private:
-    Server server;
-    bool is_running;
+    Server *server;
 
     std::list<Sensor<int> *> i_sensors;
     std::list<Sensor<float> *> f_sensors;
     std::list<Sensor<bool> *> b_sensors;
 
+    bool is_running;
     std::thread data_collector;
 
     template <typename T>
     void processSensorList(std::list<Sensor<T> *> sensor_list) {
         for (Sensor<T> *sensor : sensor_list) {
-            if (sensor->isReady()) {
-                std::string name = sensor->getName();
-                T data = sensor->sendData();
-                server.dataRcv(name, data);
-                sensor->updateTimer();
-            }
+        if (sensor->isReady()) {
+            std::string name = sensor->getName();
+            T data = sensor->sendData();
+            server->recieveData(name, data);
+            sensor->updateTimer();
         }
+    }
     }
 
    public:
@@ -40,32 +40,14 @@ class Scheduler {
 
     Scheduler &operator=(const Scheduler &scheduler);
 
-    void addSensor(Sensor<int> *sensor);
-    void addSensor(Sensor<float> *sensor);
-    void addSensor(Sensor<bool> *sensor);
+    void linkServer(Server &server);
 
-    void removeSensor(std::string name);
+    void linkSensor(Sensor<int> &sensor);
+    void linkSensor(Sensor<float> &sensor);
+    void linkSensor(Sensor<bool> &sensor);
 
-    void start() {
-        if (is_running) {
-            return;
-        }
-        is_running = true;
-        data_collector = std::thread([this]() {
-            std::cout << "Hello" << std::endl;
-            while (is_running) {
-                processSensorList(i_sensors);
-                processSensorList(f_sensors);
-                processSensorList(b_sensors);
-                std::this_thread::sleep_for(std::chrono::milliseconds(10));
-            }
-        });
-    }
+    void unlinkSensor(std::string name);
 
-    void stop() {
-        if (is_running) {
-            is_running = false;
-            data_collector.join();
-        }
-    }
+    void start();
+    void stop();
 };

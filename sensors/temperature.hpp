@@ -3,7 +3,14 @@
 #include "./sensor.hpp"
 
 class TemperatureSensor : public Sensor<float> {
-    void aleaGenVal() {
-        value = ((float) rand() / RAND_MAX) * 100 - 50;
-    }
+   private:
+    void aleaGenVal();
+
+   public:
+    TemperatureSensor();
+    TemperatureSensor(const TemperatureSensor& sensor);
+    TemperatureSensor(std::string name, int interval);
+    ~TemperatureSensor();
+
+    TemperatureSensor& operator=(const TemperatureSensor& sensor);
 };

@@ -16,11 +16,14 @@ class Sensor {
     T value;
 
    public:
-    Sensor() : name("unnamed_sensor"), interval(100), value() {}
+    Sensor() : name("unnamed_sensor"), interval(1000), value() {}
+
     Sensor(const Sensor &sensor)
         : name(sensor.name), interval(sensor.interval), value(sensor.value) {}
-    Sensor(std::string name, time_t interval)
+
+    Sensor(std::string name, int interval)
         : name(name), interval(interval) {}
+        
     ~Sensor() {}
 
     std::string getName() { return name; }

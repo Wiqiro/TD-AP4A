@@ -1,38 +1,26 @@
 #include "server.hpp"
 
-Server::Server() {
-    consolActivation = true;
-    logActivation = true;
-}
+
+Server::Server()
+    : console_activation(true), logs_activation(true), logs_folder("logs") {}
 
 Server::Server(const Server &server)
-    : consolActivation(server.consolActivation),
-      logActivation(server.logActivation) {}
+    : console_activation(server.console_activation),
+      logs_activation(server.logs_activation),
+      logs_folder(server.logs_folder) {}
 
-Server::Server(bool consolActivation, bool logActivation)
-    : consolActivation(consolActivation), logActivation(logActivation) {}
+Server::Server(std::string logs_folder, bool console_activation,
+               bool logs_activation)
+    : console_activation(console_activation),
+      logs_activation(logs_activation),
+      logs_folder(logs_folder) {}
 
 Server::~Server() {}
 
 Server &Server::operator=(const Server &server) {
-    consolActivation = server.consolActivation;
-    logActivation = server.logActivation;
+    console_activation = server.console_activation;
+    logs_activation = server.logs_activation;
     return *this;
 }
 
 /* std::ostream &operator<<(std::ostream &os, int dataSens) {} */
-
-
-
-
-template void Server::fileWrite<int>(std::ofstream &file, int data);
-template void Server::fileWrite<float>(std::ofstream &file, float data);
-template void Server::fileWrite<bool>(std::ofstream &file, bool data);
-
-template void Server::consoleWrite<int>(std::string sensorName, int data);
-template void Server::consoleWrite<float>(std::string sensorName, float data);
-template void Server::consoleWrite<bool>(std::string sensorName, bool data);
-
-template void Server::dataRcv<int>(std::string sensorName, int data);
-template void Server::dataRcv<float>(std::string sensorName, float data);
-template void Server::dataRcv<bool>(std::string sensorName, bool data);

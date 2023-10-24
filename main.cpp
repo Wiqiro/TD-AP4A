@@ -12,17 +12,23 @@
 int main() {
     srand(time(nullptr));
 
+    HumiditySensor cave_humidity("cave_humidity", 1000);
+    SoundSensor sound_sensor("sound_sensor", 2000);
+    /* LightSensor day_sensor("day_sensor", 5000); */
+    TemperatureSensor house_temperature("house_temperature", 9090);
+
+    Server server("./logs/", true, true);
+
     Scheduler scheduler;
-
-    HumiditySensor h_sens;
-    SoundSensor s_sens;
-
-    scheduler.addSensor(&h_sens);
-    scheduler.addSensor(&s_sens);
+    scheduler.linkServer(server);
+    scheduler.linkSensor(cave_humidity);
+    scheduler.linkSensor(sound_sensor);
+    scheduler.linkSensor(house_temperature);
 
     scheduler.start();
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    std::this_thread::sleep_for(std::chrono::milliseconds(5000));
     scheduler.stop();
+    std::this_thread::sleep_for(std::chrono::milliseconds(5000));
 
     return 0;
 }
