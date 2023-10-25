@@ -1,6 +1,6 @@
 #include "humidity.hpp"
 
-void HumiditySensor::aleaGenVal() { value = ((float)rand() / RAND_MAX) * 100; }
+void HumiditySensor::generateValue() { value = ((float)rand() / RAND_MAX) * 100; }
 
 HumiditySensor::HumiditySensor() : Sensor(){};
 

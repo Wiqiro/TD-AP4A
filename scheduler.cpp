@@ -1,6 +1,5 @@
 #include "scheduler.hpp"
 
-
 Scheduler::Scheduler()
     : server(nullptr),
       i_sensors(),
@@ -8,7 +7,9 @@ Scheduler::Scheduler()
       b_sensors(),
       is_running(false) {}
 
-Scheduler::~Scheduler() {}
+Scheduler::~Scheduler() {
+    stop();
+}
 
 Scheduler &Scheduler::operator=(const Scheduler &scheduler) {
     server = scheduler.server;
@@ -40,18 +41,23 @@ void Scheduler::unlinkSensor(std::string name) {
         [&name](Sensor<bool> *s) { return s->getName() == name; });
 }
 
-void Scheduler::start() {
-    if (is_running) return;
+bool Scheduler::start() {
+    if (is_running) return true;
 
     is_running = true;
-    data_collector = std::thread([this]() {
-        while (is_running) {
-            processSensorList(i_sensors);
-            processSensorList(f_sensors);
-            processSensorList(b_sensors);
-            std::this_thread::sleep_for(std::chrono::milliseconds(1));
-        }
-    });
+    try {
+        data_collector = std::thread([this]() {
+            while (is_running) {
+                processSensorList(i_sensors);
+                processSensorList(f_sensors);
+                processSensorList(b_sensors);
+                std::this_thread::sleep_for(std::chrono::milliseconds(1));
+            }
+        });
+    } catch (const std::system_error &error) {
+        is_running = false;
+    }
+    return data_collector.joinable();
 }
 
 void Scheduler::stop() {

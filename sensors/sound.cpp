@@ -1,6 +1,6 @@
 #include "sound.hpp"
 
-void SoundSensor::aleaGenVal() { value = rand() % 100 + 30; }
+void SoundSensor::generateValue() { value = rand() % 100 + 30; }
 
 SoundSensor::SoundSensor() : Sensor(){};
 

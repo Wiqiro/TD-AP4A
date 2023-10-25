@@ -1,6 +1,6 @@
 #include "light.hpp"
 
-void LightSensor::aleaGenVal() { value = (rand() % 2 == 0); }
+void LightSensor::generateValue() { value = (rand() % 2 == 0); }
 
 LightSensor::LightSensor() : Sensor(){};
 

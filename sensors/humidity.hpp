@@ -4,7 +4,11 @@
 
 class HumiditySensor : public Sensor<float> {
    private:
-    void aleaGenVal();
+    /**
+     * @brief Génère une valeur de capteur aléatoire
+     *
+     */
+    void generateValue();
 
    public:
     HumiditySensor();

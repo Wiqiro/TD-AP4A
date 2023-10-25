@@ -9,6 +9,7 @@
 #include "sensors/temperature.hpp"
 #include "server.hpp"
 
+
 int main() {
     srand(time(nullptr));
 
@@ -28,7 +29,11 @@ int main() {
     scheduler.start();
     std::this_thread::sleep_for(std::chrono::milliseconds(5000));
     scheduler.stop();
+    std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+    scheduler.start();
     std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+  
+
 
     return 0;
 }

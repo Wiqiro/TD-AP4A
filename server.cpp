@@ -22,5 +22,3 @@ Server &Server::operator=(const Server &server) {
     logs_activation = server.logs_activation;
     return *this;
 }
-
-/* std::ostream &operator<<(std::ostream &os, int dataSens) {} */

@@ -15,6 +15,13 @@ class Server {
     bool logs_activation;
     std::filesystem::path logs_folder;
 
+    /**
+     * @brief Ecrit la valeur d'un capteur dans un fichier
+     * 
+     * @tparam T le type de la valeur à écrire
+     * @param file le fichier dans lequel écrire la valeur
+     * @param data la valeur à écrire
+     */
     template <typename T>
     void fileWrite(std::ofstream &file, T data) {
         auto now = std::chrono::system_clock::now();
@@ -24,6 +31,13 @@ class Server {
              << std::endl;
     }
 
+    /**
+     * @brief Ecrit la valeur d'un capteur dans la console
+     * 
+     * @tparam T le type de la valeur à écrire
+     * @param sensor_name le nom du capteur
+     * @param data la valeur à écrire
+     */
     template <typename T>
     void consoleWrite(std::string sensor_name, T data) {
         auto now = std::chrono::system_clock::now();
@@ -40,8 +54,14 @@ class Server {
     ~Server();
 
     Server &operator=(const Server &server);
-    /*  friend std::ostream &operator<<(std::ostream &os, int &data); */
-
+     
+    /**
+     * @brief Reçois les données d'un capteur pour les rediriger vers les sorties
+     * 
+     * @tparam T type de la valeur du capteur
+     * @param sensor_name nom du capteur
+     * @param data valeur du capteur
+     */
     template <typename T>
     void recieveData(std::string sensor_name, T data) {
         if (console_activation) {

@@ -1,6 +1,6 @@
 #include "temperature.hpp"
 
-void TemperatureSensor::aleaGenVal() { value = ((float) rand() / RAND_MAX) * 100 - 50; }
+void TemperatureSensor::generateValue() { value = ((float) rand() / RAND_MAX) * 100 - 50; }
 
 TemperatureSensor::TemperatureSensor() : Sensor(){};
 

@@ -4,7 +4,11 @@
 
 class LightSensor : public Sensor<bool> {
    private:
-    void aleaGenVal();
+    /**
+     * @brief Génère une valeur de capteur aléatoire
+     *
+     */
+    void generateValue();
 
    public:
     LightSensor();
