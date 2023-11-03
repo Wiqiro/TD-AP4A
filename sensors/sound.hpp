@@ -14,7 +14,7 @@ class SoundSensor : public Sensor<int> {
     SoundSensor();
     SoundSensor(const SoundSensor& sensor);
     SoundSensor(std::string name, int interval);
-    ~SoundSensor();
+    ~SoundSensor() = default;
 
     SoundSensor& operator=(const SoundSensor& sensor);
 };

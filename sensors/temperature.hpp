@@ -14,7 +14,7 @@ class TemperatureSensor : public Sensor<float> {
     TemperatureSensor();
     TemperatureSensor(const TemperatureSensor& sensor);
     TemperatureSensor(std::string name, int interval);
-    ~TemperatureSensor();
+    ~TemperatureSensor() = default;
 
     TemperatureSensor& operator=(const TemperatureSensor& sensor);
 };

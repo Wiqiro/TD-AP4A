@@ -15,10 +15,9 @@ Server::Server(std::string logs_folder, bool console_activation,
       logs_activation(logs_activation),
       logs_folder(logs_folder) {}
 
-Server::~Server() {}
-
 Server &Server::operator=(const Server &server) {
     console_activation = server.console_activation;
     logs_activation = server.logs_activation;
+    logs_folder = server.logs_folder;
     return *this;
 }
