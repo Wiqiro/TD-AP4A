@@ -10,27 +10,16 @@
 #include "sensors/temperature.hpp"
 #include "server.hpp"
 
+// Macro permettant de clear la console
+#ifdef _WIN32
+#include <windows.h>
+#define CLEAR() std::system("cls")
+#else
+#define CLEAR() std::system("clear")
+#endif
+
 int main() {
     srand(time(nullptr));
-
-    /* HumiditySensor cave_humidity("cave_humidity", 1000);
-    SoundSensor sound_sensor("sound_sensor", 2000);
-    TemperatureSensor house_temperature("house_temperature", 9090);
-
-    Server server("./logs/", true, true);
-
-    Scheduler scheduler;
-    scheduler.linkServer(server);
-    scheduler.linkSensor(cave_humidity);
-    scheduler.linkSensor(sound_sensor);
-    scheduler.linkSensor(house_temperature);
-
-    scheduler.start();
-    std::this_thread::sleep_for(std::chrono::milliseconds(5000));
-    scheduler.stop();
-    std::this_thread::sleep_for(std::chrono::milliseconds(2000));
-    scheduler.start();
-    std::this_thread::sleep_for(std::chrono::milliseconds(5000)); */
 
     Scheduler scheduler;
 
@@ -46,6 +35,7 @@ int main() {
         std::string sensor_name;
         int sensor_interval;
 
+        CLEAR();
         std::cout << "Choisissez le type du capteur que vous souhaitez ajouter"
                   << std::endl
                   << "Temperature = 1, Humidité = 2, Son = 3, Lumière = 4: ";
@@ -87,8 +77,8 @@ int main() {
             default:
                 break;
         }
-
         char buffer;
+
         std::cout << "Voules-vous ajouter de nouveaux capteurs ? (O/n) ";
         std::cin >> buffer;
         if (toupper(buffer) == 'N') {
@@ -96,9 +86,10 @@ int main() {
         }
     }
 
-    std::cout << std::endl
-              << "Pour commencer la simulation: L" << std::endl
+    CLEAR();
+    std::cout << "Pour commencer la simulation: L" << std::endl
               << "Pour pauser la simulation: P" << std::endl
+              << "Pour nettoyer la console: C" << std::endl
               << "Pour quitter le programme: Q" << std::endl
               << std::endl;
 
@@ -108,6 +99,7 @@ int main() {
         std::cin >> buffer;
         switch (toupper(buffer)) {
             case 'L':
+            CLEAR();
                 if (!scheduler.isRunning()) {
                     if (scheduler.start()) {
                         std::cout << "Simulation en marche" << std::endl;
@@ -123,6 +115,9 @@ int main() {
                     std::cout << "Simulation en pause" << std::endl;
                     scheduler.stop();
                 }
+                break;
+            case 'C':
+                CLEAR();
                 break;
             case 'Q':
                 running = false;

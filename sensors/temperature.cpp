@@ -1,7 +1,8 @@
 #include "temperature.hpp"
 
 void TemperatureSensor::generateValue() {
-    value = ((float)rand() / RAND_MAX) * 100 - 50;
+    // Génération d'un float aléatoire entre -10 et 40
+    value = ((float)rand() / RAND_MAX) * 50 - 10;
 }
 
 TemperatureSensor::TemperatureSensor() : Sensor(){};

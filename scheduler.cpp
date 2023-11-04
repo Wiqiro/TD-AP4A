@@ -51,6 +51,7 @@ bool Scheduler::start() {
     if (is_running) return true;
 
     try {
+        is_running = true;
         data_collector = std::thread([this]() {
             while (is_running) {
                 processSensorList(i_sensors);
@@ -59,11 +60,12 @@ bool Scheduler::start() {
                 std::this_thread::sleep_for(std::chrono::milliseconds(1));
             }
         });
-        is_running = true;
     } catch (const std::system_error &error) {
         is_running = false;
     }
-    return data_collector.joinable();
+
+    if (!data_collector.joinable()) is_running = false;
+    return is_running;
 }
 
 void Scheduler::stop() {

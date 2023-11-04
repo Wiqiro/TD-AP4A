@@ -1,6 +1,9 @@
 #include "light.hpp"
 
-void LightSensor::generateValue() { value = (rand() % 2 == 0); }
+void LightSensor::generateValue() {
+    // Génération d'un booléen aléatoire
+    value = (rand() % 2 == 0);
+}
 
 LightSensor::LightSensor() : Sensor(){};
 
