@@ -1,5 +1,5 @@
-#include <ctime>
 #include <cctype>
+#include <ctime>
 
 #include "scheduler.hpp"
 #include "sensors/humidity.hpp"
@@ -38,6 +38,7 @@ bool addSensorFromInput(Scheduler &scheduler) {
 
     std::cin >> sensor_type;
     FLUSH_CIN();
+    // On check si l'input est correcte
     if (std::cin.fail() || sensor_type < 1 || sensor_type > 4) {
         std::cin.clear();
         return false;
@@ -49,11 +50,15 @@ bool addSensorFromInput(Scheduler &scheduler) {
     std::cout << "Choisissez l'intervalle de lecture du capteur en ms: ";
     std::cin >> sensor_interval;
     FLUSH_CIN();
+    // On check si l'input est correcte
     if (std::cin.fail()) {
         std::cin.clear();
         return false;
     }
 
+    // Test pour savoir quel type de capteur ajouter
+    // On ne garde pas les références des capteurs car on ne les utilisera plis
+    // Pour les libérer on utilisera la méthode deleteSensors()
     switch (sensor_type) {
         case 1: {
             TemperatureSensor *sensor =
@@ -124,8 +129,10 @@ int main() {
             std::cin >> char_buffer;
             FLUSH_CIN();
             if (toupper(char_buffer) == 'N') {
+                // On quitte la boucle si l'utilisateur n'ajoute pas de capteur
                 break;
             } else {
+                // On clear simplement et la boucle recommencera
                 CLEAR_CONSOLE();
             }
         } else {
@@ -152,6 +159,7 @@ int main() {
         switch (toupper(char_buffer)) {
             case 'L':
                 CLEAR_CONSOLE();
+                // On débute la simulation si aucun problème n'est rencontré
                 if (!scheduler.isRunning()) {
                     if (scheduler.start()) {
                         std::cout << "Simulation en marche" << std::endl;
@@ -163,6 +171,7 @@ int main() {
                 }
                 break;
             case 'P':
+                // Mise en pause de la simulation
                 if (scheduler.isRunning()) {
                     std::cout << "Simulation en pause" << std::endl;
                     scheduler.stop();
@@ -172,6 +181,8 @@ int main() {
                 CLEAR_CONSOLE();
                 break;
             case 'Q':
+                // On quitte la boucle principale pour aller vers la fin du
+                // programme
                 running = false;
                 break;
             default:

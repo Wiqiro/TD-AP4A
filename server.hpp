@@ -1,11 +1,11 @@
 #pragma once
 
 #include <chrono>
+#include <ctime>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <string>
-#include <ctime>
 
 #include "sensors/sensor.hpp"
 
@@ -14,8 +14,6 @@ class Server {
     bool console_activation;
     bool logs_activation;
     std::filesystem::path logs_folder;
-
-
 
     /**
      * @brief Ecrit la valeur d'un capteur dans un fichier
@@ -26,6 +24,7 @@ class Server {
      */
     template <typename T>
     void fileWrite(std::ofstream &file, T data) {
+        // On récupère l'heure actuelle
         std::time_t time = std::time(nullptr);
 
         file << std::put_time(std::localtime(&time), "%X: ") << data
@@ -41,19 +40,48 @@ class Server {
      */
     template <typename T>
     void consoleWrite(std::string sensor_name, T data) {
+        // On récupère l'heure actuelle
         std::time_t time = std::time(nullptr);
 
-        std::cout << std::put_time(std::localtime(&time), "%X  ")
-                  << sensor_name << ": " << data << std::endl;
+        std::cout << std::put_time(std::localtime(&time), "%X  ") << sensor_name
+                  << ": " << data << std::endl;
     }
 
    public:
+    /**
+     * @brief Constructeur par défaut de la classe Server
+     *
+     */
     Server();
+
+    /**
+     * @brief Constructeur par recopie de la classe Server
+     *
+     * @param server le capteur à copier
+     */
     Server(const Server &server);
+
+    /**
+     * @brief Constructeur de la classe Server
+     *
+     * @param logs_folder le chemin du dossier où les logs seront stockés
+     * @param console_activation indique si les données sont affichées
+     * @param logs_activation indique si les données sont loggées
+     */
     Server(std::string logs_folder, bool console_activation,
            bool logs_activation);
+
+    /**
+     * @brief Destructeur de la classe Server
+     */
     ~Server() = default;
 
+    /**
+     * @brief Opérateur d'affectation de la classe Server
+     *
+     * @param server le serveur à copier
+     * @return Server& une référence au serveur copié
+     */
     Server &operator=(const Server &server);
 
     /**
@@ -66,6 +94,7 @@ class Server {
      */
     template <typename T>
     void operator<<(const std::tuple<std::string, T> &data) {
+        // Simple appel à la fonction recieveDate avec les données du tuple
         this->recieveData(std::get<0>(data), std::get<1>(data));
     }
 
@@ -85,8 +114,10 @@ class Server {
 
         if (logs_activation) {
             if (!std::filesystem::exists(logs_folder)) {
+                // On créé le dossier des logs si il n'existe pas
                 std::filesystem::create_directories(logs_folder);
             }
+            // On ouvre le fichier du capteur à la fin
             std::ofstream sensor_file(logs_folder / sensor_name, std::ios::app);
             fileWrite(sensor_file, data);
             sensor_file.close();

@@ -3,7 +3,6 @@
 #include <chrono>
 #include <string>
 
-
 template <typename T>
 class Sensor {
    private:
@@ -23,22 +22,47 @@ class Sensor {
     T value;
 
    public:
+    /**
+     * @brief Constructeur par défaut de la classe Sensor
+     *
+     */
     Sensor() : name("unnamed_sensor"), interval(1000), value(0) {
         updateTimer();
     }
 
+    /**
+     * @brief Constructeur par reopie de la classe Sensor
+     *
+     * @param sensor le capteur à copier
+     */
     Sensor(const Sensor &sensor)
         : name(sensor.name), interval(sensor.interval), value(sensor.value) {
         updateTimer();
     }
 
+    /**
+     * @brief Constructeur de la classe Sensor
+     *
+     * @param name le nom du capteur
+     * @param interval l'intervalle de lecture du capteur
+     */
     Sensor(std::string name, u_int interval)
         : name(name), interval(interval), value(0) {
         updateTimer();
     }
 
+    /**
+     * @brief Destructeur de la classe Sensor
+     * 
+     */
     virtual ~Sensor() = default;
 
+    /**
+     * @brief Opérateur d'affectation de la classe Sensor
+     *
+     * @param sensor Le capteur à copier
+     * @return Sensor& Une référence à l'objet Sensor copié
+     */
     Sensor &operator=(const Sensor &sensor) {
         if (this != &sensor) {
             name = sensor.name;
@@ -80,10 +104,13 @@ class Sensor {
      * @return false sinon
      */
     bool isReady() {
+        // On calcule le nombre de ms depuis la dernière lecture
         auto current_time = std::chrono::system_clock::now();
         auto elapsed_time =
             std::chrono::duration_cast<std::chrono::milliseconds>(
                 current_time - last_read_time);
+        // On regarde si le temps depuis la dernière lecture est plus grand que
+        // l'intervalle de lecture
         return elapsed_time.count() >= interval;
     }
 

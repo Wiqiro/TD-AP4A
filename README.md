@@ -179,4 +179,3 @@ Pour aller plus loin, il serait également très intéressant de proposer une ge
 
 
 ## Annexe: Diagramme de classes UML
-

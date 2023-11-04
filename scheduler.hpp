@@ -35,9 +35,12 @@ class Scheduler {
      */
     template <typename T>
     void processSensorList(std::list<Sensor<T> *> &sensor_list) {
+        // Pas obligé mais pour plus de visibilité
         Server &server = *this->server;
         for (Sensor<T> *sensor : sensor_list) {
             if (sensor->isReady()) {
+                // On envoie les données du capteur vers le serveur si
+                // l'intervalle du capteur est dépassée
                 std::tuple<std::string, T> data = {sensor->getName(),
                                                    sensor->sendData()};
                 server << data;
@@ -47,10 +50,33 @@ class Scheduler {
     }
 
    public:
+    /**
+     * @brief Constructeur par défaut de la classe Scheduler
+     *
+     */
     Scheduler();
+
+    /**
+     * @brief Constructeur par recopie de la classe Scheduler
+     *
+     * @param scheduler le scheduler à copier
+     */
     Scheduler(const Scheduler &scheduler);
+
+    /**
+     * @brief Destructeur de la classe Scheduler
+     *
+     * Arrête la simulation si elle est en cours mais ne libère pas la mémoire
+     * des capteurs et du serveur.
+     */
     ~Scheduler();
 
+    /**
+     * @brief Opérateur d'affectation de la classe Scheduler
+     *
+     * @param scheduler le scheduler à copier
+     * @return Scheduler& une référence au scheduler copié
+     */
     Scheduler &operator=(const Scheduler &scheduler);
 
     /**
@@ -103,7 +129,7 @@ class Scheduler {
     /**
      * @brief Lance la simulation
      *
-     * @return true si le lancement est réussi et
+     * @return true si le lancement est réussi
      * @return false si le lancement n'est pas réussi
      */
     bool start();
