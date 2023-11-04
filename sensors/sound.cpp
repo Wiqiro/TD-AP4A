@@ -9,7 +9,7 @@ SoundSensor::SoundSensor() : Sensor(){};
 
 SoundSensor::SoundSensor(const SoundSensor& sensor) : Sensor(sensor) {}
 
-SoundSensor::SoundSensor(std::string name, int interval)
+SoundSensor::SoundSensor(std::string name, u_int interval)
     : Sensor(name, interval) {}
 
 SoundSensor& SoundSensor::operator=(const SoundSensor& sensor) {

@@ -3,11 +3,12 @@
 #include <chrono>
 #include <string>
 
+
 template <typename T>
 class Sensor {
    private:
     std::string name;
-    int interval;
+    u_int interval;
 
     // Dernière fois que le capteur a été lu
     std::chrono::time_point<std::chrono::system_clock> last_read_time;
@@ -31,7 +32,7 @@ class Sensor {
         updateTimer();
     }
 
-    Sensor(std::string name, int interval)
+    Sensor(std::string name, u_int interval)
         : name(name), interval(interval), value(0) {
         updateTimer();
     }
@@ -70,7 +71,7 @@ class Sensor {
      *
      * @param interval intervalle de lecture du capteur
      */
-    void setInterval(int interval) { this->interval = interval; }
+    void setInterval(u_int interval) { this->interval = interval; }
 
     /**
      * @brief Permet de savoir si le capteur peut être lu à nouveau

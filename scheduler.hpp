@@ -61,21 +61,21 @@ class Scheduler {
     void linkServer(Server *server);
 
     /**
-     * @brief Relie un capteur au scheduler
+     * @brief Relie un capteur de type int au scheduler
      *
      * @param sensor capteur à relier au scheduler
      */
     void linkSensor(Sensor<int> *sensor);
 
     /**
-     * @brief Relie un capteur au scheduler
+     * @brief Relie un capteur de type float au scheduler
      *
      * @param sensor capteur à relier au scheduler
      */
     void linkSensor(Sensor<float> *sensor);
 
     /**
-     * @brief Relie un capteur au scheduler
+     * @brief Relie un capteur de type bool au scheduler
      *
      * @param sensor capteur à relier au scheduler
      */

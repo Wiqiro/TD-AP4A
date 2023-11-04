@@ -9,7 +9,7 @@ LightSensor::LightSensor() : Sensor(){};
 
 LightSensor::LightSensor(const LightSensor& sensor) : Sensor(sensor) {}
 
-LightSensor::LightSensor(std::string name, int interval)
+LightSensor::LightSensor(std::string name, u_int interval)
     : Sensor(name, interval) {}
 
 LightSensor& LightSensor::operator=(const LightSensor& sensor) {

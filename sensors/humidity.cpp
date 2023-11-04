@@ -9,7 +9,7 @@ HumiditySensor::HumiditySensor() : Sensor(){};
 
 HumiditySensor::HumiditySensor(const HumiditySensor& sensor) : Sensor(sensor) {}
 
-HumiditySensor::HumiditySensor(std::string name, int interval)
+HumiditySensor::HumiditySensor(std::string name, u_int interval)
     : Sensor(name, interval) {}
 
 HumiditySensor& HumiditySensor::operator=(const HumiditySensor& sensor) {

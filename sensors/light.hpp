@@ -13,7 +13,7 @@ class LightSensor : public Sensor<bool> {
    public:
     LightSensor();
     LightSensor(const LightSensor& sensor);
-    LightSensor(std::string name, int interval);
+    LightSensor(std::string name, u_int interval);
     ~LightSensor() = default;
 
     LightSensor& operator=(const LightSensor& sensor);

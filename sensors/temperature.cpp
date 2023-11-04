@@ -10,7 +10,7 @@ TemperatureSensor::TemperatureSensor() : Sensor(){};
 TemperatureSensor::TemperatureSensor(const TemperatureSensor& sensor)
     : Sensor(sensor) {}
 
-TemperatureSensor::TemperatureSensor(std::string name, int interval)
+TemperatureSensor::TemperatureSensor(std::string name, u_int interval)
     : Sensor(name, interval) {}
 
 TemperatureSensor& TemperatureSensor::operator=(

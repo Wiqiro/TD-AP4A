@@ -13,7 +13,7 @@ class HumiditySensor : public Sensor<float> {
    public:
     HumiditySensor();
     HumiditySensor(const HumiditySensor& sensor);
-    HumiditySensor(std::string name, int interval);
+    HumiditySensor(std::string name, u_int interval);
     ~HumiditySensor() = default;
 
     HumiditySensor& operator=(const HumiditySensor& sensor);
