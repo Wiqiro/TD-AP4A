@@ -175,7 +175,3 @@ Pour conclure, l'intégralité des fonctionnalités demandés par le sujet du TP
 - Une utilisation plus sécurisée des threads pour éviter de potentiels problèmes de synchronisation dans le cas d'une utilisation plus complexe
 
 Pour aller plus loin, il serait également très intéressant de proposer une gestion d'environnements plus complexes, avec par exemple un système permettant de gérer et sauvegarder des scénarios de simulation personnalisés par l'utilisateur, des outils d'analyse des fichiers de logs résultant des simulations , ou encore une liaison avec de réels capteurs.
-
-
-
-## Annexe: Diagramme de classes UML
